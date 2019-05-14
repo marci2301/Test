@@ -1,13 +1,13 @@
-<<<<<<< HEAD
-/Window.class
+/Artikel.class
+/BufferedReaderTest.class
+/BufferedWriterTest.class
+/Datenverwaltung.class
+/TestDateiverarbeitung.class
 /Window$1.class
-/Window2.class
-/save.class
-/KlasseSaveCSV.class
+/Window.class
 /Window2$1.class
-/WindowVerwaltung.class
 /Window2$2.class
 /Window2$3.class
-=======
-/Praktikum5/
->>>>>>> branch 'master' of https://github.com/marci2301/Test.git
+/Window2.class
+/WindowVerwaltung.class
+/methode.class
