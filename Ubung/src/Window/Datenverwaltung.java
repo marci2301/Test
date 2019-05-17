@@ -18,7 +18,7 @@ public class Datenverwaltung {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean saveObject(String dateiname, LinkedList<Artikel> artikelliste) {
+	public boolean saveObject(String dateiname, LinkedList<String> ll) {
 
 		File file = null;
 		FileOutputStream fos = null;
@@ -28,7 +28,7 @@ public class Datenverwaltung {
 			file = new File(dateiname);
 			fos = new FileOutputStream(file);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(artikelliste);
+			oos.writeObject(ll);
 		} 
 		catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
@@ -51,12 +51,12 @@ public class Datenverwaltung {
 		return true;
 	}
 
-	public LinkedList<Artikel> loadObject(String dateiname) {
+	public LinkedList<String> loadObject(String dateiname) {
 
 		File file = null;
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		LinkedList<Artikel> al = null;
+		LinkedList<String> ll = null;
 
 		try {
 			file = new File(dateiname);
@@ -65,7 +65,7 @@ public class Datenverwaltung {
 
 			Object o = ois.readObject();
 			if (o instanceof LinkedList<?>)
-				al = (LinkedList<Artikel>) o;
+				ll = (LinkedList<String>) o;
 		} 
 		catch(FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
@@ -91,10 +91,10 @@ public class Datenverwaltung {
 				ioe.printStackTrace();
 			}
 		}
-		return al;
+		return ll;
 	}
 
-	public boolean saveArtikelObject(String dateiname, Artikel artikel) {
+	public boolean saveArtikelObject(String dateiname, String s) {
 		
 		File file = null;
 		FileOutputStream fos = null;
@@ -105,7 +105,7 @@ public class Datenverwaltung {
 			fos = new FileOutputStream(file);
 			oos = new ObjectOutputStream(fos);
 			
-			oos.writeObject(artikel);
+			oos.writeObject(s);
 		}
 		catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
@@ -129,12 +129,12 @@ public class Datenverwaltung {
 		return true;		
 	}
 
-	public Artikel loadArtikelObject(String dateiname) {
+	public String loadArtikelObject(String dateiname) {
 		
 		File file = null;
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		Artikel art = null;
+		String s = null;
 		
 		try {
 			file = new File(dateiname);
@@ -142,8 +142,8 @@ public class Datenverwaltung {
 			ois = new ObjectInputStream(fis);
 			
 			Object o = ois.readObject();
-			if (o instanceof Artikel)
-				art = (Artikel) o;
+			if (o instanceof String)
+				s= (String) o;
 		} 
 		catch(FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
@@ -171,10 +171,10 @@ public class Datenverwaltung {
 			}
 		}
 		
-		return art;
+		return s;
 	}
 
-	public boolean saveCSV(String dateiname, LinkedList<Artikel> artikelliste) {
+	public boolean saveCSV(String dateiname, LinkedList<String> ll) {
 		
 		File file = null;
 		FileWriter fw = null;
@@ -185,8 +185,8 @@ public class Datenverwaltung {
 			fw = new FileWriter(file);
 			bw = new BufferedWriter(fw);
 			
-			for(Artikel art : artikelliste) {
-			bw.write(art.toString());
+			for(String s : ll) {
+			bw.write(s);
 			bw.newLine();
 			}
 		}
@@ -209,13 +209,13 @@ public class Datenverwaltung {
 		return true;
 	}
 
-	public LinkedList<Artikel> loadCSV(String dateiname) {
+	public LinkedList<String> loadCSV(String dateiname) {
 		
 		File file = null;
 		FileReader fr = null;
 		BufferedReader br = null;
 		String zeile = null;
-		LinkedList<Artikel> al = null;
+		LinkedList<String> ll = null;
 		
 		try {
 			file = new File(dateiname);
@@ -224,12 +224,9 @@ public class Datenverwaltung {
 			
 			while((zeile = br.readLine()) != null) {
 				String[] temp = zeile.split(";");
-				int artNr = Integer.parseInt(temp[0]);
-				String artBez = temp[1];
-				double preis = Double.parseDouble(temp[2]);
 				
-				al = new LinkedList<Artikel>();
-				al.add(new Artikel(artNr, artBez, preis));				
+				ll = new LinkedList<String>();
+				ll.add(temp[0]);		
 			}
 		}
 		catch(FileNotFoundException fnfe) {
@@ -254,10 +251,10 @@ public class Datenverwaltung {
 				ioe.printStackTrace();
 			}
 		}
-		return al;
+		return ll;
 	}
 
-	public boolean saveArtikelCSV(String dateiname, Artikel artikel) {
+	public boolean saveArtikelCSV(String dateiname, String s) {
 		
 		File file = null;
 		FileWriter fw = null;
@@ -268,7 +265,7 @@ public class Datenverwaltung {
 			fw = new FileWriter(file);
 			bw = new BufferedWriter(fw);
 			
-			bw.write(artikel.toString());
+			bw.write(s);
 			bw.newLine();
 		}
 		catch(IOException ioe) {
@@ -291,13 +288,13 @@ public class Datenverwaltung {
 
 	}
 
-	public Artikel loadArtikelCSV(String dateiname) {
+	public String loadArtikelCSV(String dateiname) {
 		
 		File file = null;
 		FileReader fr = null;
 		BufferedReader br = null;
 		String zeile = null;
-		Artikel art = null;
+		String s = null;
 		
 		try {
 			file = new File(dateiname);
@@ -305,12 +302,8 @@ public class Datenverwaltung {
 			br = new BufferedReader(fr);
 			
 			while((zeile = br.readLine()) != null) {
-				String[] temp = zeile.split(";");
-				int artNr = Integer.parseInt(temp[0]);
-				String artBez = temp[1];
-				double preis = Double.parseDouble(temp[2]);
-				
-				art = new Artikel(artNr, artBez, preis);
+				String[] temp = zeile.split(";");				
+				s = new String(temp[0]);
 			}				
 		}
 		catch(FileNotFoundException fnfe) {
@@ -332,6 +325,6 @@ public class Datenverwaltung {
 				ioe.printStackTrace();
 			} 
 		}		
-		return art;
+		return s;
 	}
 }
